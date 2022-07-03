@@ -1,0 +1,8 @@
+#! /bin/sh
+
+xterm \
+	-title bottombar \
+	-class Bar \
+	-background dimgray \
+	-geometry 50x1+0-0 \
+	-e "tput civis; $HOME/Documents/scripts/barline bottom"

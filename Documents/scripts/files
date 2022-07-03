@@ -1,0 +1,5 @@
+#! /bin/sh
+
+[ -d "$1" ] && dir="$1" || exit 1 
+choice=`printf 'none\n..\n%s' "$(ls --group-directories-first "$dir")" | bemenu -p 'pick file:'` || exit 1
+[ -d "$dir/$choice" ] && exec files "$dir/$choice" || exec echo "$dir/$choice"

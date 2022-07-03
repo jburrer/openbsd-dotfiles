@@ -1,0 +1,73 @@
+*foreground					: #dcdccc
+*background					: #3f3f3f
+*cursorColor				: #aaaaaa
+*colorUL					: #366060
+*underlineColor				: #dfaf8f
+*color0						: #3f3f3f
+*color1						: #93e0e3
+*color2						: #7f9f7f
+*color3						: #d0bf8f
+*color4						: #6ca0a3
+*color5						: #dc8cc3
+*color6						: #dcdccc
+*color7						: #cc9393
+*color8						: #000000
+*color9						: #dca3a3
+*color10					: #bfebbf
+*color11					: #f0dfaf
+*color12					: #8cd0d3
+*color13					: #dc8cc3
+*color14					: #93e0e3
+*color15					: #ffffff
+
+*face						: monospace:size=9
+*faceName					: DejaVu Sans Mono
+*faceSize					: 9 
+*renderFont					: true
+Xft.autohint  				: 0
+Xft.lcdfilter				: lcddefault
+Xft.hintstyle				: hintslight
+Xft.hinting					: 1
+Xft.antialias				: 1
+Xft.rgba					: rgb
+
+XIdle*position				: sw
+XIdle*delay					: 1
+XIdle*timeout				: 300
+
+XLock.description			: off
+XLock.echokeys				: off
+XLock.info					:
+XLock.background			: dimgray
+XLock.foreground			: #dcdccc
+XLock.mode					: blank
+XLock.username				: \040\040user 
+XLock.password				: passwd 
+XLock.font					: -misc-fixed-medium-r-normal-*-30-*-*-*-*-*-iso10646-1
+XLock.planfont				: -misc-fixed-medium-r-normal-*-26-*-*-*-*-*-iso10646-1
+
+XClock*analog				: false
+XClock*twentyfour			: false
+XClock*padding				: 0
+XClock*geometry				: -0-0
+XClock*render				: true
+XClock*background			: dimgray
+
+XTerm*borderWidth			: 0
+XTerm*internalBorder		: 0 
+XTerm*geometry				: 88x27+200+200
+XTerm*termName				: xterm-256color
+XTerm*metaSendsEscape		: true
+XTerm*scrollBar				: false
+XTerm*bellIsUrgent			: true
+XTerm*allowBoldFonts		: false
+XTerm*scrollKey				: true
+XTerm*fullscreen			: never
+XTerm*cutToBeginningOfLine	: false
+XTerm*cutNewline			: false
+XTerm*charClass				: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+XTerm*on2Clicks				: word
+XTerm*on3Clicks				: line
+
+*bar.background				: #7f9f7f
+*bar.foreground				: #3f3f3f

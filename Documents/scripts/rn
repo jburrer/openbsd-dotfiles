@@ -1,0 +1,18 @@
+#! /bin/sh
+
+IFS='
+'
+cache="$HOME/.cache/rn"
+[ -z "$1" ] && dir=`pwd` || dir="$1"
+
+contents=`ls "$dir"`
+printf '%s\n' "$contents" > "$cache"
+$EDITOR -n "$cache"
+i=1
+for item in $contents; do
+	name=`head -"$i" "$cache" | tail -1`
+	mv -v "$dir/$item" "$dir/$name" 2> /dev/null
+	i=$((i+1))
+done
+rm "$cache"
+unset IFS

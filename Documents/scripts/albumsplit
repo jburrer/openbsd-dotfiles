@@ -1,0 +1,59 @@
+#! /bin/sh
+
+[ ! -f "$2" ] && echo 'first argument should be a youtube link, second should be a textfile with timecodes' && exit 1
+
+fixfilename() {
+	echo "$1" | iconv -cf UTF-8 -t ASCII//TRANSLIT | tr -d '[:punct:]' | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | sed "s/-\+/-/g; s/\(^-\|\\$\)//g"
+}
+
+# get album info
+echo -n 'album: '
+read -r album
+echo -n 'artist: '
+read -r artist
+echo -n 'year: '
+read -r year
+
+# create directory to store files
+writedir="$HOME/music/$(fixfilename "$artist")/$(fixfilename "$album")"
+! mkdir -p "$writedir" && echo "creation failed: $writedir" && exit 1
+
+# create cache directory
+downloaddir="$HOME/.cache/album-split"
+mkdir -p "$downloaddir"
+
+# download audio
+echo
+yt-dlp -x -f bestaudio/best -o "$downloaddir/%(id)s.%(ext)s" "$1" || exit 1
+new=`ls "$downloaddir"`
+audiofile="$downloaddir/$new"
+echo
+
+# loop through timestamps, divide, re-encode, and tag tracks
+while read -r x; do
+	end="$(echo "$x" | cut -d ' ' -f 1)"
+	if [ -n "$start" ]; then
+		printf '\e[32m%s. %s\e[0m (from %s to %s)\n' "$num" "$track" "$start" "$end" 
+		file="$writedir/$(printf '%.2d' "$num")-$trackfile.mp3"
+		echo 'splitting...'
+		ffmpeg -nostdin -y -loglevel -8 -i "$audiofile" -ss "$start" -to "$end" -vn -c copy -c:a libmp3lame "$file"
+		echo 'tagging...'
+		id3v2 -d
+		id3v2 -a "$artist" -A "$album" -t "$track" -T "$num" -y "$year" "$file"
+	fi
+	track="$(echo "$x" | cut -d ' ' -f 2-)"
+	trackfile=`fixfilename "$track"`
+	num="$((num+1))"
+	start="$end"
+done < "$2"
+# last track must be done outside the loop
+printf '\e[32m%s. %s\e[0m (from %s to %s)\n' "$num" "$track" "$start" "$end" 
+file="$writedir/$(printf '%.2d' "$num")-$trackfile.mp3"
+echo 'splitting...'
+ffmpeg -nostdin -y -loglevel -8 -i "$audiofile" -ss "$start" -vn -c copy -c:a libmp3lame "$file"
+echo 'tagging...'
+id3v2 -d
+id3v2 -a "$artist" -A "$album" -t "$track" -T "$num" -y "$year" "$file"
+
+# clear cache directory
+rm "$audiofile"

@@ -1,0 +1,103 @@
+sticky yes
+snapdist 4
+
+fontname "monospace:pixelsize=20"
+borderwidth 3
+
+color font "#dcdccc"
+color selfont "#7f9f7f"
+color menufg "#3f3f3f"
+color menubg "#3f3f3f"
+color activeborder "#7f9f7f"
+color inactiveborder "#696969"
+
+unbind-key all
+
+bind-key 4-Return terminal
+bind-key CM-l lock
+
+bind-key 4-Up window-raise
+bind-key 4-Down window-lower
+bind-key 4-Tab window-cycle
+bind-key 4S-Tab window-rcycle
+bind-key 4-w window-delete
+bind-key 4-n window-menu-label
+
+bind-key 4-1 group-only-1
+bind-key 4-2 group-only-2
+bind-key 4-3 group-only-3
+bind-key 4-4 group-only-4
+bind-key 4-5 group-only-5
+bind-key 4-6 group-only-6
+bind-key 4-7 group-only-7
+bind-key 4-8 group-only-8
+bind-key 4-9 group-only-9
+
+bind-key 4S-1 window-movetogroup-1
+bind-key 4S-2 window-movetogroup-2
+bind-key 4S-3 window-movetogroup-3
+bind-key 4S-4 window-movetogroup-4
+bind-key 4S-5 window-movetogroup-5
+bind-key 4S-6 window-movetogroup-6
+bind-key 4S-7 window-movetogroup-7
+bind-key 4S-8 window-movetogroup-8
+bind-key 4S-9 window-movetogroup-9
+
+bind-key 4-a group-toggle-all
+bind-key 4-g window-group
+
+bind-key 4-Right group-cycle
+bind-key 4-Left group-rcycle
+bind-key 4-s window-stick
+
+bind-key 4-m window-maximize
+bind-key 4-equal window-vmaximize
+bind-key 4S-equal window-hmaximize
+
+bind-key 4-h window-move-left-big
+bind-key 4-j window-move-down-big
+bind-key 4-k window-move-up-big
+bind-key 4-l window-move-right-big
+
+bind-key 4S-h window-resize-left-big
+bind-key 4S-j window-resize-down-big
+bind-key 4S-k window-resize-up-big
+bind-key 4S-l window-resize-right-big
+
+bind-key 4-v window-vtile
+bind-key 4-c window-htile
+
+# mod + / = show popup menu of current windows
+bind-key 4-slash menu-window
+# mod + d = show popup menu to run a command (configured below)
+bind-key 4-d menu-cmd
+# mod + ? = show popup menu to run an arbitrary command
+bind-key 4-question menu-exec
+# mod + . = show popup menu of known ssh hosts to connect to
+bind-key 4-period menu-ssh
+
+bind-key 4S-r restart
+bind-key 4S-e quit
+
+unbind-mouse M-1
+unbind-mouse CM-1
+unbind-mouse M-2
+unbind-mouse M-3
+unbind-mouse CMS-3
+
+bind-mouse 4-1 window-move
+bind-mouse 4-3 window-resize
+
+command librewolf	librewolf
+command fff			'xterm -geometry 50x20+600+300 -e fff'
+command cmus		'xterm -e cmus'
+command xterm		xterm
+command xcalc		xcalc
+
+bind-key 4-p 'cmus-remote -u'
+
+ignore xclock
+ignore topbar 
+ignore bottombar 
+autogroup 0 Bar
+autogroup 0 XClock 

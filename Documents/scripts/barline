@@ -1,0 +1,19 @@
+#! /bin/sh
+
+getgroup() {
+	xprop -root '_NET_CURRENT_DESKTOP' | cut -d ' ' -f 3	
+}
+
+getbattery() {
+	apm | grep 'Battery state' | cut -d ' ' -f 3,4,5 | tr -d ','
+}
+
+if [ -n $1 ]; then
+	while true; do
+		[ "$1" = 'top' ] && \
+			printf '\n%s' "$(getgroup)" \
+		|| \
+			printf '\n%s' "$(getbattery)"
+		sleep 1
+	done
+fi

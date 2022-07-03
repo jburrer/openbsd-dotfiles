@@ -1,0 +1,13 @@
+set default-fg "#dcdccc"
+set default-bg "#3f3f3f"
+
+set statusbar-fg "#3f3f3f"
+set statusbar-bg "#7f9f7f"
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+
+set font "monospace normal 15"
+
+set recolor true
+set recolor-darkcolor "#3f3f3f"
+set recolor-lightcolor "#dcdccc"

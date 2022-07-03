@@ -1,0 +1,52 @@
+#! /bin/sh
+
+# takes movie file as $1
+movie() {
+	echo -n 'movie title: '
+	read -r title
+	ffmpeg -i "$1" -metadata title="$title" -c:v copy -c:a copy -c:s copy "$(dirname "$1")/temp$(basename "$1")"
+	rm "$1"
+	mv "temp$1" "$1"
+}
+
+# takes directory as $1, titles file as $2
+show() {
+	echo -n 'show title: '
+	read -r title
+	echo -n 'season: '
+	read -r season
+	num=1
+	for i in `ls $1/*.mkv`; do
+		file=`basename "$i"`
+		ffmpeg -i "$i" -metadata title="$title - s$(getshownum $season)e$(getshownum $num) - $(cat "$2" | cut -d$'\n' -f "$num")" -c:v copy -c:a copy -c:s copy "$1/temp$file"
+		rm "$i"
+		mv "$1/temp$file" "$i"
+		num=$((num+1))
+	done
+}
+
+# add 0 as first digit of single digit number
+getshownum() {
+	[ $1 -lt 10 ] && echo "0$1" || echo "$1"
+}
+
+# no options provided, fail
+if [ -z "$1" ]; then
+	echo 'must provide at least one argument'
+	exit
+# 1 option provided, interpret as movie if .mkv file, titles file otherwise
+elif [ -z "$2" ]; then
+	[ ! -f "$1" ] && echo 'argument must be valid file' && exit 1
+	# interpret as movie if .mkv file
+	if echo "$1" | grep '.mkv' > /dev/null; then
+		movie "$1"
+	# otherwise interpret as titles file
+	else	
+		show "$PWD" "$1"
+	fi
+# 2 options provided, interpret as show with directory and titles file
+else
+	[ ! -d "$1" ] && echo 'must provide valid show directory' && exit 1
+	[ ! -f "$2" ] && echo 'must provide valid title file' && exit 1
+	show "$1" "$2"
+fi
